@@ -40,15 +40,67 @@ function getAttr(hdf5Obj::HDF5File, group::AbstractString, attr::AbstractString)
 	if ! (attr in names(attrs(hdf5Obj[group])))
 		error("Please check if given attribute name is correct!")
 	end
+
 	attrInfo = read(attrs(hdf5Obj[group]), attr)
 	return attrInfo
 end
 
 # Get attributes from UniqueGlobalKey/channel_id
 
+function getChannelNumber(hdf5Obj::HDF5File)
+	attribute = "channel_number"
+	channelnumber = getAttr(hdf5Obj, channel_id, attribute)
+	return channelnumber
+end
 
+function getSamplingRate(hdf5Obj::HDF5File)
+	attribute = "sampling_rate"
+	samplingrate = getAttr(hdf5Obj, channel_id, attribute)
+	return samplingrate
+end
+
+function getDigitisation(hdf5Obj::HDF5File)
+	attribute = "digitisation"
+	digitisation = getAttr(hdf5Obj, channel_id, attribute)
+	return digitisation
+end
 
 # Get attributes from UniqueGlobalKey/tracking_id
+
+function getFlowcellID(hdf5Obj::HDF5File)
+	attribute = "flow_cell_id"
+	flowcellid = getAttr(hdf5Obj, tracking_id, attribute)
+end
+
+function getDeviceID(hdf5Obj::HDF5File)
+	attribute = "device_id"
+	deviceid = getAttr(hdf5Obj, tracking_id, attribute)
+	return deviceid
+end
+
+function getDeviceType(hdf5Obj::HDF5File)
+	attribute = "device_type"
+	devicetype = getAttr(hdf5Obj, tracking_id, attribute)
+	return devicetype
+end
+
+function getHeatsinkTemp(hdf5Obj::HDF5File)
+	attribute = "heatsink_temp"
+	headsinktemp = getAttr(hdf5Obj, tracking_id, attribute)
+	return heatsinktemp
+end
+
+function getProtocolRunID(hdf5Obj::HDF5File)
+	attribute = "protocol_run_id"
+	protocolrunid = getAttr(hdf5Obj, tracking_id, attribute)
+	return protocolrunid
+end
+
+function getProtocolsVersion(hdf5Obj::HDF5File)
+	attribute = "protocols_version"
+	protocolversion = getAttr(hdf5Obj, tracking_id, attribute)
+	return protocolversion
+end
 
 function getSampleId(hdf5Obj::HDF5File)
 	attribute = "sample_id"
@@ -79,7 +131,7 @@ end
 function getRunId(hdf5Obj::HDF5File)
 	attribute = "run_id"
 	runid = getAttr(hdf5Obj, tracking_id, attribute)
-
+	return runid
 end
 
 function getVersion(hdf5Obj::HDF5File)
