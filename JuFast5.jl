@@ -8,11 +8,12 @@ export f5Reader, checkIntegrity, getAttr, getDataset,
 	   getFlowcellType, isLocalBasecalled,
 	   getChannelNumber, getSamplingRate, getDigitisation,
 	   getFlowcellID, getDeviceID, getDeviceType,
-	   getHeatsinkTemp, getSampleID. getProtocolRunID,
-	   getExpStartTime, getRunID, getVersion,
-	   getProtocolsVersion, getASICId, getASICversion,
+	   getHeatsinkTemp, getSampleID, getProtocolRunID,
+	   getRunID, getVersion, getProtocolsVersion,
 	   getExperimentDurationSet, getUserFilenameInput,
-	   getExperimentType, getFilename
+	   getExperimentType, getFilename, getReadName,
+	   getDuration, getMedianB4, getReadID, getReadNumber,
+	   getStartMux, getStartTime
 
 const requiredGroup = ["Raw", "UniqueGlobalKey", "PreviousReadInfo"]
 const context_tags = "UniqueGlobalKey/context_tags"
@@ -48,6 +49,54 @@ function getAttr(hdf5Obj::HDF5File, group::AbstractString, attr::AbstractString)
 
 	attrInfo = read(attrs(hdf5Obj[group]), attr)
 	return attrInfo
+end
+
+# Get attributes from Raw/Reads/Read_n
+
+function getReadName(hdf5Obj)
+	return string(raw_reads, "/", iterate(keys(read(hdf5Obj[raw_reads])))[1])
+end
+
+function getDuration(hdf5Obj::HDF5File)
+	attribute = "duration"
+	path = getReadName(hdf5Obj)
+	duration = getAttr(hdf5Obj, path, attribute)
+	return duration
+end
+
+function getMedianB4(hdf5Obj::HDF5File)
+	attribute = "median_before"
+	path = getReadName(hdf5Obj)
+	medianb4 = getAttr(jdf5Obj, path, attribute)
+	return medianb4
+end
+
+function getReadID(hdf5Obj::HDF5File)
+	attribute = "read_id"
+	path = getReadName(hdf5Obj)
+	readid = getAttr(hdf5Obj, path, attribute)
+	return readid
+end
+
+function getReadNumber(hdf5Obj::HDF5File)
+	attribute = "read_number"
+	path = getReadName(hdf5Obj)
+	readnumber = getAttr(hdf5Obj, path, attribute)
+	return readnumber
+end
+
+function getStartMux(hdf5Obj::HDF5File)
+	attribute = "start_mux"
+	path = getReadName(hdf5Obj)
+	startmux = getAttr(hdf5Obj, path, attribute)
+	return startmux
+end
+
+function getStartTime(hdf5Obj::HDF5File)
+	attribute = "start_time"
+	path = getReadName(hdf5Obj)
+	starttime = getAttr(hdf5Obj, path, attribute)
+	return starttime
 end
 
 # Get attributes from UniqueGlobalKey/channel_id
