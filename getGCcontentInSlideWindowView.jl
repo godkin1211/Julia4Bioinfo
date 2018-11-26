@@ -1,4 +1,8 @@
+module makeSlideWindows
 
+using BioSequences, DataFrames
+
+export getGCcontentInSlideWindowView
 
 function getGCcontentInSlideWindowView(seq::BioSequence{DNAAlphabet{4}}, windowSize::Int, asProb::Bool, seqName::String)
 	inputSeqLen = length(seq)
@@ -28,4 +32,6 @@ function getGCcontentInSlideWindowView(seq::BioSequence{DNAAlphabet{4}}, windowS
 	end
 	output = DataFrame(Chrom = Chromosome, Start = StartPos, Stop = StopPos, GC = GCcontent)
 	return output
+end
+
 end
