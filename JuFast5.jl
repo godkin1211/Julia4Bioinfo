@@ -6,6 +6,11 @@ export f5Reader, checkIntegrity, getAttr, getDataset,
        getASICId, getASICversion, getExpStartTime, 
 	   getRunId, getVersion, getSequencingKit,
 	   getFlowcellType, isLocalBasecalled,
+	   getChannelNumber, getSamplingRate, getDigitisation,
+	   getFlowcellID, getDeviceID, getDeviceType,
+	   getHeatsinkTemp, getSampleID. getProtocolRunID,
+	   getExpStartTime, getRunID, getVersion,
+	   getProtocolsVersion, getASICId, getASICversion,
 	   getExperimentDurationSet, getUserFilenameInput,
 	   getExperimentType, getFilename
 
